@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8mfuMW9ytyhuLMMKFkWsf1ITARhy5EjwHgZ2tIYoIwyP6etOB5V7XMwTUA6/Ak7KFjxknn6YHGxDJkJv8rcEzA==",
+  "dgSpecHash": "YfhKtDOQOeKIAS2FEsMtKuQvH26RMPVQ9S+zE9yXvrEs34VVcEN54pNnMkswQXZOmBPjKUkMt+OtauCGobV6aA==",
   "success": true,
-  "projectFilePath": "/workspaces/codespaces-blank/AdventOfCode23/AdventOfCode23.csproj",
+  "projectFilePath": "/workspaces/AdventOfCode23/AdventOfCode23/AdventOfCode23.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

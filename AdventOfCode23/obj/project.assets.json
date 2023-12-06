@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspaces/codespaces-blank/AdventOfCode23/AdventOfCode23.csproj",
+      "projectUniqueName": "/workspaces/AdventOfCode23/AdventOfCode23/AdventOfCode23.csproj",
       "projectName": "AdventOfCode23",
-      "projectPath": "/workspaces/codespaces-blank/AdventOfCode23/AdventOfCode23.csproj",
+      "projectPath": "/workspaces/AdventOfCode23/AdventOfCode23/AdventOfCode23.csproj",
       "packagesPath": "/home/codespace/.nuget/packages/",
-      "outputPath": "/workspaces/codespaces-blank/AdventOfCode23/obj/",
+      "outputPath": "/workspaces/AdventOfCode23/AdventOfCode23/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/codespace/.nuget/NuGet/NuGet.Config"

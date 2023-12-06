@@ -6,7 +6,8 @@ public class Day06 : IDay
 
     private List<(long Time, long Distance)> BestRecords = new List<(long Time, long Distance)>();
 
-    public Day06(string filePath){
+    public Day06(string filePath)
+    {
         lines = File.ReadAllLines(filePath);
     }
 
@@ -33,23 +34,17 @@ public class Day06 : IDay
         return BestRecords.Select(GetWaysToWin).Aggregate((a, b) => a * b);
     }
 
-    private long GetWaysToWin((long Time, long Distance) record)
-    {
-        return LongEnumerable(1, record.Time).Where(buttonTime => GetDistance(record.Time - buttonTime, buttonTime) > record.Distance).Count();
-    }
+    private long GetWaysToWin((long Time, long Distance) record) =>
+        LongEnumerable(1, record.Time).Where(buttonTime => GetDistance(record.Time - buttonTime, buttonTime) > record.Distance).Count();
 
     private IEnumerable<long> LongEnumerable(long start, long end)
     {
         for (long i = start; i <= end; i++)
-        {
             yield return i;
-        }
     }
 
-    private long GetDistance(long time, long speed)
-    {
-        return time * speed;
-    }
+    private long GetDistance(long time, long speed) =>
+        time * speed;
 
     public object SolveTwo()
     {

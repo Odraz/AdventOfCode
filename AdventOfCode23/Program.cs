@@ -2,8 +2,8 @@
 
 Stopwatch stopwatch = new();
 
-string input = "Day06/input01.txt";
-IDay day = new Day06(input);
+string input = "Day07/input.txt";
+IDay day = new Day07(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving input: '{input}'");
@@ -23,7 +23,7 @@ PrintResult(1, stopwatch, solution1);
 #endregion
 
 #region SolveTwo
-day = new Day06(input);
+day = new Day07(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving 2");

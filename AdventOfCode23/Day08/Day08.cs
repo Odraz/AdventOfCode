@@ -1,5 +1,3 @@
-using AdventOfCode.Interfaces;
-
 using System.Text.RegularExpressions;
 
 public class Day08 : IDay
@@ -69,28 +67,39 @@ public class Day08 : IDay
 
         string[] endingLocations = nodes.Where(node => node.Key.EndsWith("Z")).Select(node => node.Key).ToArray();
 
-        ulong steps = 1;
+        long[] steps = Enumerable.Repeat(1L, currentLocations.Length).ToArray();
 
-        while (currentLocations.Any(location => !endingLocations.Contains(location)))
+        for (int i = 0; i < currentLocations.Length; i++)
         {
-            foreach(char instruction in instructions)
-            {
-                currentLocations = currentLocations.Select(location => {
-                    return instruction switch
+            string currentLocation = currentLocations[i];
+            while (!endingLocations.Contains(currentLocation))
+            {      
+                foreach (char instruction in instructions)
+                {
+                    switch (instruction)
                     {
-                        LEFT => nodes[location].L,
-                        RIGHT => nodes[location].R,
-                        _ => throw new NotImplementedException()
-                    };
-                }).ToArray();
-                
-                if (currentLocations.All(location => endingLocations.Contains(location)))
-                    break;
+                        case LEFT:
+                            currentLocation = nodes[currentLocation].L;
+                            break;
+                        case RIGHT:
+                            currentLocation = nodes[currentLocation].R;
+                            break;
+                    }
 
-                steps++;
+                    if (endingLocations.Contains(currentLocation))
+                        break;
+
+                    steps[i]++;
+                } 
             }
         }
 
-        return steps;
+        return steps.Aggregate(LCM);
     }
+
+    private long LCM(long a, long b) =>
+        a * b / GCD(a, b);
+
+    private long GCD(long a, long b) =>
+        b == 0 ? a : GCD(b, a % b);
 }

@@ -4,8 +4,8 @@ using System.Diagnostics;
 
 Stopwatch stopwatch = new();
 
-string input = "C:\\Users\\TPouzar\\source\\repos\\AdventOfCode23\\AdventOfCode23\\Day07\\input.txt"; // 97632: too low
-IDay day = new Day07(input);
+string input = @"Day08/input.txt";
+IDay day = new Day08(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving input: '{input}'");
@@ -25,7 +25,7 @@ PrintResult(1, stopwatch, solution1);
 #endregion
 
 #region SolveTwo
-day = new Day07(input);
+day = new Day08(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving 2");
@@ -40,6 +40,8 @@ stopwatch.Stop();
 PrintResult(2, stopwatch, solution2);
 #endregion
 
+Console.ForegroundColor = ConsoleColor.DarkYellow;
+Console.WriteLine("Press any key to exit...");
 Console.ReadKey();
 
 static void PrintResult(int solutionNumber, Stopwatch stopwatch, object solution2)

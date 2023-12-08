@@ -1,3 +1,5 @@
+using AdventOfCode.Interfaces;
+
 using System.Text.RegularExpressions;
 
 public class Day07 : IDay

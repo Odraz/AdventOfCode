@@ -1,37 +1,62 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "Commons/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Commons.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Commons.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Commons/1.0.0": {
+      "type": "project",
+      "path": "../Commons/Commons.csproj",
+      "msbuildProject": "../Commons/Commons.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "Commons >= 1.0.0"
+    ]
   },
   "packageFolders": {
-    "/home/codespace/.nuget/packages/": {}
+    "C:\\Users\\TPouzar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspaces/codespaces-blank/AdventOfCode23/AdventOfCode23.csproj",
+      "projectUniqueName": "C:\\Users\\TPouzar\\source\\repos\\AdventOfCode23\\AdventOfCode23\\AdventOfCode23.csproj",
       "projectName": "AdventOfCode23",
-      "projectPath": "/workspaces/codespaces-blank/AdventOfCode23/AdventOfCode23.csproj",
-      "packagesPath": "/home/codespace/.nuget/packages/",
-      "outputPath": "/workspaces/codespaces-blank/AdventOfCode23/obj/",
+      "projectPath": "C:\\Users\\TPouzar\\source\\repos\\AdventOfCode23\\AdventOfCode23\\AdventOfCode23.csproj",
+      "packagesPath": "C:\\Users\\TPouzar\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\TPouzar\\source\\repos\\AdventOfCode23\\AdventOfCode23\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/codespace/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\TPouzar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\TPouzar\\source\\repos\\AdventOfCode23\\Commons\\Commons.csproj": {
+              "projectPath": "C:\\Users\\TPouzar\\source\\repos\\AdventOfCode23\\Commons\\Commons.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -59,7 +84,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/dotnet/7.0.306/sdk/7.0.306/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

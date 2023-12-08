@@ -1,3 +1,5 @@
+using AdventOfCode.Interfaces;
+
 using System.Text.RegularExpressions;
 
 public class Day08 : IDay
@@ -67,11 +69,12 @@ public class Day08 : IDay
 
         string[] endingLocations = nodes.Where(node => node.Key.EndsWith("Z")).Select(node => node.Key).ToArray();
 
-        int steps = 1;
+        ulong steps = 1;
 
         while (currentLocations.Any(location => !endingLocations.Contains(location)))
         {
-            instructions.ToList().ForEach(instruction => {
+            foreach(char instruction in instructions)
+            {
                 currentLocations = currentLocations.Select(location => {
                     return instruction switch
                     {
@@ -82,10 +85,10 @@ public class Day08 : IDay
                 }).ToArray();
                 
                 if (currentLocations.All(location => endingLocations.Contains(location)))
-                    return;
+                    break;
 
                 steps++;
-            });
+            }
         }
 
         return steps;

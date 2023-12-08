@@ -2,8 +2,8 @@
 
 Stopwatch stopwatch = new();
 
-string input = "Day07/input.txt";
-IDay day = new Day07(input);
+string input = "Day08/input.txt"; // 97632: too low
+IDay day = new Day08(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving input: '{input}'");
@@ -23,7 +23,7 @@ PrintResult(1, stopwatch, solution1);
 #endregion
 
 #region SolveTwo
-day = new Day07(input);
+day = new Day08(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving 2");

@@ -37,10 +37,10 @@ public class Day13 : IDay
         {
             string[] pattern = patterns.ElementAt(i);
 
-            long verticalReflectionsNum = VerticalReflectionLine(pattern);
+            long verticalReflectionsNum = VerticalReflectionLine(i, pattern, true);
             if (verticalReflectionsNum == 0)
             {
-                long horizontalReflectionsNum = HorizontalReflectionLine(pattern);
+                long horizontalReflectionsNum = HorizontalReflectionLine(i, pattern);
                 result += 100 * horizontalReflectionsNum;
                 horizontalReflections.Add(i, horizontalReflectionsNum);
             }
@@ -54,7 +54,7 @@ public class Day13 : IDay
         return result;
     }
 
-    private long VerticalReflectionLine(string[] lines, int? rowFlip = null, int? columnFlip = null)
+    private long VerticalReflectionLine(int patternId, string[] lines, bool isVerticalSearch, int? rowFlip = null, int? columnFlip = null)
     {
         Dictionary<int, bool> verticalReflectionsTmp = new Dictionary<int, bool>();
         for (int l = 0; l < lines.Length; l++)
@@ -95,23 +95,18 @@ public class Day13 : IDay
             }
         }
 
-        int foundLines = verticalReflectionsTmp.Where(x => x.Value).Count();
-        if (foundLines == 1)
-            return verticalReflectionsTmp.SingleOrDefault(x => x.Value).Key;
+            IEnumerable<KeyValuePair<int, bool>> foundLines = verticalReflectionsTmp
+            .Where(x => x.Value &&
+                        (rowFlip == null ||
+                        (!isVerticalSearch || !verticalReflections.ContainsKey(patternId) || verticalReflections[patternId] != x.Key) &&
+                        (isVerticalSearch || !horizontalReflections.ContainsKey(patternId) || horizontalReflections[patternId] != x.Key)));
+        if (foundLines.Count() == 1)
+            return foundLines.SingleOrDefault().Key;
         else
             return 0;
-
-        //     IEnumerable<KeyValuePair<int, bool>> foundLines = verticalReflectionsTmp
-        //     .Where(x => x.Value &&
-        //                 (rowFlip != null || !verticalReflections.Values.Contains(x.Key)) &&
-        //                 (rowFlip == null || !horizontalReflections.Values.Contains(x.Key)));
-        // if (foundLines.Count() == 1)
-        //     return foundLines.SingleOrDefault().Key;
-        // else
-        //     return 0;
     }
 
-    private long HorizontalReflectionLine(string[] lines, int? rowFlip = null, int? columnFlip = null)
+    private long HorizontalReflectionLine(int patternId, string[] lines, int? rowFlip = null, int? columnFlip = null)
     {
         string[] flippedLines = new string[lines[0].Length];
         foreach (string line in lines)
@@ -122,7 +117,7 @@ public class Day13 : IDay
             }
         }
 
-        return VerticalReflectionLine(flippedLines, rowFlip, columnFlip);
+        return VerticalReflectionLine(patternId, flippedLines, false, rowFlip, columnFlip);
     }
 
     public object SolveTwo()
@@ -141,7 +136,7 @@ public class Day13 : IDay
             {
                 for (int k = 0; k < pattern[i].Length; k++)
                 {
-                    verticalReflectionsNum = VerticalReflectionLine(pattern, i, k);
+                    verticalReflectionsNum = VerticalReflectionLine(p, pattern, true, i, k);
                     
                     if (verticalReflectionsNum != 0 && !(verticalReflections.ContainsKey(p) && verticalReflections[p] == verticalReflectionsNum))
                         break;
@@ -170,7 +165,7 @@ public class Day13 : IDay
             {
                 for (int k = 0; k < pattern[i].Length; k++)
                 {
-                    horizontalReflectionsNum = HorizontalReflectionLine(pattern, k, i);
+                    horizontalReflectionsNum = HorizontalReflectionLine(p, pattern, k, i);
                     
                     if (horizontalReflectionsNum != 0 && !(horizontalReflections.ContainsKey(p) && horizontalReflections[p] == horizontalReflectionsNum))
                         break;

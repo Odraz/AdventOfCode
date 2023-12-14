@@ -4,9 +4,9 @@ using System.Diagnostics;
 
 Stopwatch stopwatch = new();
 
-string input = @"../AdventOfCode23/Day13/input.txt"; // Expected: 6 (na 10. radku nahradit 3. znak => i = 9, k = 2)
-//string input = @"Day13/input.txt";
-IDay day = new Day13(input);
+string input = @"../AdventOfCode23/Day14/input.txt"; // Expected: 6 (na 10. radku nahradit 3. znak => i = 9, k = 2)
+//string input = @"Day14/input.txt";
+IDay day = new Day14(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving input: '{input}'");
@@ -26,7 +26,7 @@ PrintResult(1, stopwatch, solution1);
 #endregion
 
 #region SolveTwo
-// day = new Day13(input);
+day = new Day14(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving 2");

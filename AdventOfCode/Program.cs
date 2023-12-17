@@ -4,9 +4,9 @@ using System.Diagnostics;
 
 Stopwatch stopwatch = new();
 
-string input = @"../AdventOfCode23/Day15/input.txt";
-//string input = @"Day15/input.txt";
-IDay day = new Day15(input);
+string input = @"../AdventOfCode23/Day16/input.txt";
+//string input = @"Day16/input.txt";
+IDay day = new Day16(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving input: '{input}'");
@@ -26,7 +26,7 @@ PrintResult(1, stopwatch, solution1);
 #endregion
 
 #region SolveTwo
-day = new Day15(input);
+day = new Day16(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving 2");

@@ -4,9 +4,9 @@ using System.Diagnostics;
 
 Stopwatch stopwatch = new();
 
-string input = @"../AdventOfCode23/Day18/input.txt"; // Day17 input: 800 too high
-//string input = @"Day18/input.txt";
-IDay day = new Day18(input);
+string input = @"../AdventOfCode23/Day19/input.txt"; // Day17 input: 800 too high
+//string input = @"Day19/input.txt";
+IDay day = new Day19(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving input: '{input}'");
@@ -26,7 +26,7 @@ PrintResult(1, stopwatch, solution1);
 #endregion
 
 #region SolveTwo
-day = new Day18(input);
+day = new Day19(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
 Console.WriteLine($"> Solving 2");

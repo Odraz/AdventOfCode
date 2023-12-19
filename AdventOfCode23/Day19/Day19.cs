@@ -19,58 +19,11 @@ public class Day19 : IDay
 
     public object SolveOne()
     {
-        // Get workflows
-        // Example input:
-        // in{s<1351:px,qqz}
-        // qqz{s>2770:qs,m<1801:hdj,R}
-        // gd{a>3333:R,R}
-        // hdj{m>838:A,pv}
-        var workflows = new Dictionary<string, Workflow>();
+        Dictionary<string, Workflow> workflows = GetWorkflows();
 
-        int i = 0;
-        for (; i < lines.Length; i++)
-        {
-            string? line = lines[i];
-
-            if (line == string.Empty)
-                break;
-
-            string[] parts = line.Split('{');
-            string name = parts[0];
-            string[] rules = string.Concat(parts[1].SkipLast(1)).Split(',');
-
-            var workflow = new Workflow(name);
-
-            foreach (string rule in rules)
-            {
-                if (rule.Contains(':'))
-                {
-                    string[] ruleParts = rule.Split(':');
-                    char category = ruleParts[0][0];
-                    int value = int.Parse(ruleParts[0].Substring(2));
-                    char operation = ruleParts[0][1];
-                    string result = ruleParts[1];
-                    workflow.Rules.Add(new Rule(category, value, operation, result));
-                }
-                else
-                {
-                    workflow.Rules.Add(new Rule(rule));
-                }
-            }
-
-            workflows.Add(name, workflow);
-        }
-
-        // Get ratings
-        // Example input:
-        // {x=787,m=2655,a=1222,s=2876}
-        // {x=1679,m=44,a=2067,s=496}
-        // {x=2036,m=264,a=79,s=2244}
-        // {x=2461,m=1339,a=466,s=291}
-        // {x=2127,m=1623,a=2188,s=1013}
         List<(int X, int M, int A, int S)> ratings = new List<(int, int, int, int)>();
 
-        for (i++; i < lines.Length; i++)
+        for (int i = workflows.Count + 1; i < lines.Length; i++)
         {
             string? line = lines[i];
 
@@ -111,12 +64,154 @@ public class Day19 : IDay
         return acceptedRatings.Sum(r => r.X + r.M + r.A + r.S);
     }
 
-    public object SolveTwo()
+    private Dictionary<string, Workflow> GetWorkflows()
     {
-        throw new NotImplementedException();
+        var workflows = new Dictionary<string, Workflow>();
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string? line = lines[i];
+
+            if (line == string.Empty)
+                break;
+
+            string[] parts = line.Split('{');
+            string name = parts[0];
+            string[] rules = string.Concat(parts[1].SkipLast(1)).Split(',');
+
+            var workflow = new Workflow(name);
+
+            foreach (string rule in rules)
+            {
+                if (rule.Contains(':'))
+                {
+                    string[] ruleParts = rule.Split(':');
+                    char category = ruleParts[0][0];
+                    int value = int.Parse(ruleParts[0].Substring(2));
+                    char operation = ruleParts[0][1];
+                    string result = ruleParts[1];
+                    workflow.Rules.Add(new Rule(category, value, operation, result));
+                }
+                else
+                {
+                    workflow.Rules.Add(new Rule(rule));
+                }
+            }
+
+            workflows.Add(name, workflow);
+        }
+
+        return workflows;
     }
 
-    
+    public object SolveTwo()
+    {
+        Dictionary<string, Workflow> workflows = GetWorkflows();
+
+        List<(int Min, int Max)> combinations = new List<(int, int)>()
+        {
+            (1, 4000),
+            (1, 4000),
+            (1, 4000),
+            (1, 4000)
+        };
+
+        Dictionary<string, long> numberOfCombinations = new Dictionary<string, long>()
+        {
+            { "in", GetNumberOfCombinations(combinations) },
+            { "A", 0 },
+            { "R", 0 }
+        };
+
+        Calculate(workflows["in"], combinations, numberOfCombinations);
+
+        foreach (KeyValuePair<string, long> kvp in numberOfCombinations)
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+
+        return numberOfCombinations["A"];
+        
+        void Calculate(Workflow workflow, List<(int Min, int Max)> combinations, Dictionary<string, long> numberOfCombinations)
+        {
+            List<(int Min, int Max)> currentCombinations = new List<(int, int)>(combinations);
+
+            foreach (Rule rule in workflow.Rules)
+            {
+                if (rule.Operation == null && rule.Result == "A")
+                {
+                    numberOfCombinations["A"] += GetNumberOfCombinations(currentCombinations);
+                    return;
+                }
+                else if (rule.Operation == null && rule.Result == "R")
+                {
+                    numberOfCombinations["R"] += GetNumberOfCombinations(currentCombinations);
+                    return;
+                }
+                else
+                {
+                    List<(int Min, int Max)> newCombinations = new List<(int, int)>(currentCombinations);
+
+                    if (rule.Operation == OPERATION_GREATER)
+                    {
+                        switch (rule.Category)
+                        {
+                            case PART_X:
+                                currentCombinations[0] = (newCombinations[0].Min, Math.Min(newCombinations[0].Max, rule.Value.Value));
+                                newCombinations[0] = (Math.Max(newCombinations[0].Min, rule.Value.Value + 1), newCombinations[0].Max);
+                                break;
+                            case PART_M:
+                                currentCombinations[1] = (newCombinations[1].Min, Math.Min(newCombinations[1].Max, rule.Value.Value));
+                                newCombinations[1] = (Math.Max(newCombinations[1].Min, rule.Value.Value + 1), newCombinations[1].Max);
+                                break;
+                            case PART_A:
+                                currentCombinations[2] = (newCombinations[2].Min, Math.Min(newCombinations[2].Max, rule.Value.Value));
+                                newCombinations[2] = (Math.Max(newCombinations[2].Min, rule.Value.Value + 1), newCombinations[2].Max);
+                                break;
+                            case PART_S:
+                                currentCombinations[3] = (newCombinations[3].Min, Math.Min(newCombinations[3].Max, rule.Value.Value));
+                                newCombinations[3] = (Math.Max(newCombinations[3].Min, rule.Value.Value + 1), newCombinations[3].Max);
+                                break;
+                        }
+                    }
+                    else if (rule.Operation == OPERATION_LESS)
+                    {
+                        switch (rule.Category)
+                        {
+                            case PART_X:
+                                currentCombinations[0] = (Math.Max(newCombinations[0].Min, rule.Value.Value), newCombinations[0].Max);
+                                newCombinations[0] = (newCombinations[0].Min, Math.Min(newCombinations[0].Max, rule.Value.Value - 1));
+                                break;
+                            case PART_M:
+                                currentCombinations[1] = (Math.Max(newCombinations[1].Min, rule.Value.Value), newCombinations[1].Max);
+                                newCombinations[1] = (newCombinations[1].Min, Math.Min(newCombinations[1].Max, rule.Value.Value - 1));
+                                break;
+                            case PART_A:
+                                currentCombinations[2] = (Math.Max(newCombinations[2].Min, rule.Value.Value), newCombinations[2].Max);
+                                newCombinations[2] = (newCombinations[2].Min, Math.Min(newCombinations[2].Max, rule.Value.Value - 1));
+                                break;
+                            case PART_S:
+                                currentCombinations[3] = (Math.Max(newCombinations[3].Min, rule.Value.Value), newCombinations[3].Max);
+                                newCombinations[3] = (newCombinations[3].Min, Math.Min(newCombinations[3].Max, rule.Value.Value - 1));
+                                break;
+                        }
+                    }
+
+                    if (rule.Result == "A" || rule.Result == "R")
+                    {
+                        numberOfCombinations[rule.Result] += GetNumberOfCombinations(newCombinations);
+                    }
+                    else
+                    {
+                        numberOfCombinations[rule.Result] = GetNumberOfCombinations(newCombinations);                            
+                        Calculate(workflows[rule.Result], newCombinations, numberOfCombinations);
+                    }
+                }
+            }   
+        }
+    }
+
+    private long GetNumberOfCombinations(List<(int Min, int Max)> combinations) =>
+        combinations.Aggregate(1L, (acc, c) => acc * (c.Max - c.Min + 1));
+
     public class Workflow
     {
         public string Name { get; set; }
@@ -131,55 +226,55 @@ public class Day19 : IDay
 
     public class Rule
     {
-        private char? category;
-        private int? value;
-        private char? operation;
-        private string result;
+        public char? Category { get; }
+        public int? Value { get; }
+        public char? Operation { get; }
+        public string Result { get; }
 
         public Rule(char category, int value, char operation, string result)
         {
-            this.category = category;
-            this.value = value;
-            this.operation = operation;            
-            this.result = result;
+            this.Category = category;
+            this.Value = value;
+            this.Operation = operation;            
+            this.Result = result;
         }
 
         public Rule(string result)
         {
-            this.result = result;
+            this.Result = result;
         }
 
         public string? GetResult((int X, int M, int A, int S) part)
         {
-            if (operation == null)
-                return result;
-            else if (category == PART_X)
+            if (Operation == null)
+                return Result;
+            else if (Category == PART_X)
             {
-                if (operation == OPERATION_LESS)
-                    return part.X < value ? result : null;
-                else if (operation == OPERATION_GREATER)
-                    return part.X > value ? result : null;
+                if (Operation == OPERATION_LESS)
+                    return part.X < Value ? Result : null;
+                else if (Operation == OPERATION_GREATER)
+                    return part.X > Value ? Result : null;
             }
-            else if (category == PART_M)
+            else if (Category == PART_M)
             {
-                if (operation == OPERATION_LESS)
-                    return part.M < value ? result : null;
-                else if (operation == OPERATION_GREATER)
-                    return part.M > value ? result : null;
+                if (Operation == OPERATION_LESS)
+                    return part.M < Value ? Result : null;
+                else if (Operation == OPERATION_GREATER)
+                    return part.M > Value ? Result : null;
             }
-            else if (category == PART_A)
+            else if (Category == PART_A)
             {
-                if (operation == OPERATION_LESS)
-                    return part.A < value ? result : null;
-                else if (operation == OPERATION_GREATER)
-                    return part.A > value ? result : null;
+                if (Operation == OPERATION_LESS)
+                    return part.A < Value ? Result : null;
+                else if (Operation == OPERATION_GREATER)
+                    return part.A > Value ? Result : null;
             }
-            else if (category == PART_S)
+            else if (Category == PART_S)
             {
-                if (operation == OPERATION_LESS)
-                    return part.S < value ? result : null;
-                else if (operation == OPERATION_GREATER)
-                    return part.S > value ? result : null;
+                if (Operation == OPERATION_LESS)
+                    return part.S < Value ? Result : null;
+                else if (Operation == OPERATION_GREATER)
+                    return part.S > Value ? Result : null;
             }
 
             return null;

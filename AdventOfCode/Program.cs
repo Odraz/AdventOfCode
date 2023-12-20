@@ -4,8 +4,8 @@ using System.Diagnostics;
 
 Stopwatch stopwatch = new();
 
-string input = @"../AdventOfCode23/Day12/input.txt";
-//string input = @"Day12/input.txt";
+//string input = @"../AdventOfCode23/Day12/input.txt";
+string input = @"Day12/example.txt";
 IDay day = new Day12(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;

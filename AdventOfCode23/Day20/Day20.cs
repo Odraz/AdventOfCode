@@ -75,8 +75,11 @@ public class Day20 : IDay
                 catch (RxEception)
                 {
                     buttonPresses = i;
+                    Console.WriteLine($"Rx hit at {i} button presses.");
                 }
             }
+            
+            Console.Write("\r" + i);
 
             if (buttonPresses > 0)
                 break;

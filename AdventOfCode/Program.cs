@@ -4,8 +4,8 @@ using System.Diagnostics;
 
 Stopwatch stopwatch = new();
 
-string input = @"../AdventOfCode23/Day20/input.txt"; // Day17 input: 800 too high
-//string input = @"Day20/input.txt";
+//string input = @"../AdventOfCode23/Day20/input.txt"; // Day17 input: 800 too high, Day20: 9804574120 too low
+string input = @"Day20/input.txt";
 IDay day = new Day20(input);
 
 Console.ForegroundColor = ConsoleColor.DarkYellow;
